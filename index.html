@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /* Add your CSS styles here */
+    </style>
+  </head>
+  <body>
+    <div>
+      <input type="text" id="linkInput" placeholder="Paste Link" />
+      <input type="text" id="nameInput" placeholder="Name" />
+      <button onclick="addItem()">Add</button>
+    </div>
+
+    <div>
+      <h2>No List</h2>
+      <ul id="noList">
+        <!-- List items will be dynamically added here -->
+      </ul>
+    </div>
+
+    <div>
+      <h2>Yes List</h2>
+      <ul id="yesList">
+        <!-- List items will be dynamically added here -->
+      </ul>
+    </div>
+
+    <script>
+      function addItem() {
+        const linkInput = document.getElementById("linkInput");
+        const nameInput = document.getElementById("nameInput");
+
+        const link = linkInput.value.trim();
+        const name = nameInput.value.trim();
+
+        if (link === "" || name === "") {
+          alert("Both link and name are required.");
+          return;
+        }
+
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `
+        ${name}: <a href="${link}" target="_blank">${link}</a>
+        <button onclick="moveToYes(this)">Yes</button>
+        <button onclick="removeItem(this)">No</button>
+      `;
+
+        document.getElementById("noList").appendChild(listItem);
+
+        linkInput.value = "";
+        nameInput.value = "";
+      }
+
+      function moveToYes(button) {
+        const listItem = button.parentNode;
+        document.getElementById("yesList").appendChild(listItem);
+        button.remove();
+      }
+
+      function removeItem(button) {
+        const listItem = button.parentNode;
+        listItem.remove();
+      }
+    </script>
+  </body>
+</html>
